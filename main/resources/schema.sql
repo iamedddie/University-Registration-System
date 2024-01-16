@@ -12,7 +12,9 @@ CREATE TABLE STUDENT (
      first_name VARCHAR(255),
      last_name VARCHAR(255),
      email VARCHAR(255),
+     address_id INT,
      FOREIGN KEY (address_id) REFERENCES ADDRESS (id),
+     student_year VARCHAR(255),
      CHECK (student_year IN ('Freshman', 'Sophomore', 'Junior', 'Senior')),
      last_registration_date DATE
 );
@@ -40,12 +42,14 @@ CREATE TABLE COURSE (
     pre_reqs VARCHAR(255),
     term VARCHAR(255),
     name VARCHAR(255),
+    department_head_id INT,
     FOREIGN KEY (department_head_id) REFERENCES DEPARTMENT_HEAD (id)
 );
 
 DROP TABLE IF EXISTS COURSE_CATALOG;
 CREATE TABLE COURSE_CATALOG  (
     id INT AUTO_INCREMENT  PRIMARY KEY,
+    course_id INT,
     FOREIGN KEY (course_id) references COURSE(id)
 );
 
@@ -55,5 +59,8 @@ CREATE TABLE CLASS  (
     class_day VARCHAR(250),
     class_time VARCHAR(250),
     location VARCHAR(250),
-    FOREIGN KEY (course_id) references COURSE(id), FOREIGN KEY (instructor_id) references INSTRUCTOR(id),
+    course_id INT,
+    instructor_id INT,
+    FOREIGN KEY (course_id) references COURSE(id),
+    FOREIGN KEY (instructor_id) references INSTRUCTOR(id)
 );
